@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/wtc/Documents/ABC/Voting_System/contracts/Voting.sol": {
-      "lastModificationDate": 1773940491359,
-      "contentHash": "23dfabbcdbbdd9c4e1fa58f977c6e344",
+      "lastModificationDate": 1773944497566,
+      "contentHash": "fb251b7c549989d995a08fc8581f4a43",
       "sourceName": "contracts/Voting.sol",
       "solcConfig": {
         "version": "0.8.20",

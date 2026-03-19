@@ -1,4 +1,4 @@
-````md
+
 # Constructors and Events in Solidity
 
 I was tasked with explaining constructors and events in Solidity, including what they are, why we use them, when to use them, how to use them, and examples.
@@ -158,5 +158,3 @@ Do not use events:
 * A constructor runs once at deployment and initializes the contract
 * Events log important actions so they can be tracked outside the contract
 
-```
-```

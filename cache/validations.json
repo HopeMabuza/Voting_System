@@ -5,6 +5,101 @@
       "contracts/Voting.sol:SimpleVoting": {
         "src": "contracts/Voting.sol:4",
         "version": {
+          "withMetadata": "4dd453a5c062c5a320869a0e0e82385bf18072f6c7ccb144dc4e6fdff7ad63bd",
+          "withoutMetadata": "b72ed8a54b2a574049666a30c41e43135c715b914013ea86a5937db3d52e0c3f",
+          "linkedWithoutMetadata": "b72ed8a54b2a574049666a30c41e43135c715b914013ea86a5937db3d52e0c3f"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "vote_X402()",
+          "vote_auditing()",
+          "winner()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "voterLog",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_mapping(t_address,t_struct(Voter)10_storage)",
+              "contract": "SimpleVoting",
+              "src": "contracts/Voting.sol:13"
+            },
+            {
+              "label": "x402Votes",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_uint256",
+              "contract": "SimpleVoting",
+              "src": "contracts/Voting.sol:15"
+            },
+            {
+              "label": "auditingVotes",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_uint256",
+              "contract": "SimpleVoting",
+              "src": "contracts/Voting.sol:16"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_enum(Choices)4": {
+              "label": "enum SimpleVoting.Choices",
+              "members": [
+                "X402",
+                "Auditing"
+              ],
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_address,t_struct(Voter)10_storage)": {
+              "label": "mapping(address => struct SimpleVoting.Voter)",
+              "numberOfBytes": "32"
+            },
+            "t_struct(Voter)10_storage": {
+              "label": "struct SimpleVoting.Voter",
+              "members": [
+                {
+                  "label": "hasVoted",
+                  "type": "t_bool",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "votedFor",
+                  "type": "t_enum(Choices)4",
+                  "offset": 1,
+                  "slot": "0"
+                }
+              ],
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.20"
+      }
+    },
+    {
+      "contracts/Voting.sol:SimpleVoting": {
+        "src": "contracts/Voting.sol:4",
+        "version": {
           "withMetadata": "bfa9143b83a8cf64ba3aba8e3b4569e47a2f72ba8f07fefc775bf45eec46ad2a",
           "withoutMetadata": "37c99a6801f8276e2754efc4ae960b778adac88553423041f056c3cb9c5f4a6d",
           "linkedWithoutMetadata": "37c99a6801f8276e2754efc4ae960b778adac88553423041f056c3cb9c5f4a6d"

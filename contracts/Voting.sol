@@ -42,9 +42,9 @@ contract SimpleVoting {
     } else if (x402Votes > auditingVotes) {
             return "x402 is the WINNER !!!!";
     } else {
-        return "x402 is the WINNER !!!!";
+        return "Auditing is the WINNER !!!!";
     }
         
     }
-    
+
 }

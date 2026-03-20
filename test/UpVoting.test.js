@@ -180,6 +180,23 @@ describe("Test Upgraddeable Voting System Contract", function(){
                 const VoteAsVoter3 = await proxy.connect(voter3);
                 await expect(VoteAsVoter3.vote(2)).to.be.revertedWith("Voting time is over");
             });
+
+            it("Should revert when non-owner tries to restart voting", async function(){
+                const proxyAsVoter1 = await proxy.connect(voter1);
+                await expect(proxyAsVoter1.restartVoting(5)).to.be.reverted;
+            });
+
+            it("Should restart voting when owner calls it", async function(){
+                await time.increase(200);
+                
+                await expect(proxy.restartVoting(5)).to.not.be.reverted;
+                
+                const duration = await proxy.duration();
+                expect(duration).to.equal(300);
+
+                const VoteAsVoter1 = await proxy.connect(voter1);
+                await expect(VoteAsVoter1.vote(1)).to.emit(proxy, "Voted").withArgs(await voter1.getAddress(), "Black");
+            });
         });
     });
 

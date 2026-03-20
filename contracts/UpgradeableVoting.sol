@@ -93,6 +93,7 @@ contract VotingV2 is Initializable, OwnableUpgradeable, UUPSUpgradeable{
     string public option2;
 
     event Voted(address indexed voter, string option);
+
     uint256 public duration;
     uint256 public startTime;
 
@@ -150,5 +151,11 @@ contract VotingV2 is Initializable, OwnableUpgradeable, UUPSUpgradeable{
         }
     }
 
+    function restartVoting(uint256 _duration) external onlyOwner {
+        duration = _duration * 60;
+        startTime = block.timestamp;
+    }
+
     function _authorizeUpgrade(address newImplementaion) internal override onlyOwner{}
 }
+

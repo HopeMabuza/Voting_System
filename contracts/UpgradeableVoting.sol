@@ -46,7 +46,7 @@ contract VotingV1 is Initializable, OwnableUpgradeable, UUPSUpgradeable{
 
     function vote(uint256 option) external {
         require(msg.sender != owner(), "Owner cannot vote");
-        Voter memory voter = voterLog[msg.sender];
+        Voter storage voter = voterLog[msg.sender];
         require(voter.hasVoted == false, "Already voted");
         if (option == 1){
             voter.hasVoted = true;
@@ -67,9 +67,9 @@ contract VotingV1 is Initializable, OwnableUpgradeable, UUPSUpgradeable{
         if(option1Votes == option2Votes){
             return "ITS A DRAW!!!!!";
         }else if(option1Votes > option2Votes){
-            return string.concat( option1 ,"WINS!!!!!!");
+            return string.concat( option1 ," WINS!!!!!!");
         }else{
-            return string.concat(option2, "WINS!!!!!!");
+            return string.concat(option2, " WINS!!!!!!");
 
         }
     }

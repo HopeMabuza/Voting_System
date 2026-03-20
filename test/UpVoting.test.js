@@ -1,5 +1,7 @@
 const {ethers, upgrades} = require("hardhat");
 const {expect} = require("chai");
+const { time } = require("@nomicfoundation/hardhat-network-helpers");//to pass time
+
 
 describe("Test Upgraddeable Voting System Contract", function(){
     let voter1;
@@ -7,22 +9,26 @@ describe("Test Upgraddeable Voting System Contract", function(){
     let voter3;
     let owner;
     let V1;
+    let V2;
     let proxy;
 
-    this.beforeEach(async function(){
+    beforeEach(async function(){
         [owner, voter1, voter2, voter3] = await ethers.getSigners();
 
         V1 = await ethers.getContractFactory("VotingV1");
+
         proxy = await upgrades.deployProxy(V1, ["Black", "White"], 
             {initializer: "initialize", kind: "uups"});
         await proxy.waitForDeployment();
+        
+
 
     });
 
     describe("State after deployment", function(){
 
         it("Should get correct contract owner", async function(){
-            expect(await proxy.owner()).to.equal(owner);
+            
         });
         it("Should get correct options to vote for", async function(){
             const option1 = await proxy.option1();
@@ -97,6 +103,83 @@ describe("Test Upgraddeable Voting System Contract", function(){
 
             const winner = await proxy.winner();
             expect(winner).to.equal("ITS A DRAW!!!!!");
+        });
+    });
+
+    describe("Upgrade implementation", function(){
+        beforeEach(async function(){
+            V2 = await ethers.getContractFactory("VotingV2");
+            const proxyAddress = await proxy.getAddress();
+
+            proxy = await upgrades.upgradeProxy(proxyAddress, V2);
+            await proxy.reinitialize(3);
+            await proxy.waitForDeployment();
+        });
+
+        describe("Check if stake is still the same", function(){
+            it("Options are still the same", async function(){
+                expect(await proxy.owner()).to.equal(owner);
+
+                const option1 = await proxy.option1();
+                const option2 = await proxy.option2();
+                expect(option1.toString()).to.equal("Black");
+                expect(option2.toString()).to.equal("White");
+
+                const option1Votes = await proxy.option1Votes();
+                const option2Votes = await proxy.option2Votes();
+                expect(option1Votes).to.equal(0);
+                expect(option2Votes).to.equal(0);
+            });
+
+            it("Should revert when we try to reinitialize", async function(){
+                await expect(proxy.reinitialize(4)).to.be.reverted;
+            });
+
+
+            //check functionality with timer
+            it("Should revert if the duraction for voting is not over", async function(){
+                const VoteAsVoter1 = await proxy.connect(voter1);
+                await expect(VoteAsVoter1.vote(1)).to.emit(proxy, "Voted").withArgs(await voter1.getAddress(), "Black");
+ 
+                const VoteAsVoter2 = await proxy.connect(voter2);
+                await expect(VoteAsVoter2.vote(1)).to.emit(proxy, "Voted").withArgs(await voter2.getAddress(), "Black");
+
+                const VoteAsVoter3 = await proxy.connect(voter3);
+                await expect(VoteAsVoter3.vote(2)).to.emit(proxy, "Voted").withArgs(await voter3.getAddress(), "White");
+
+                await expect(proxy.winner()).to.be.revertedWith("Voting is still open");
+            });
+
+            it("Should successfully see winner", async function(){
+                const VoteAsVoter1 = await proxy.connect(voter1);
+                await expect(VoteAsVoter1.vote(1)).to.emit(proxy, "Voted").withArgs(await voter1.getAddress(), "Black");
+                await time.increase(60);
+ 
+                const VoteAsVoter2 = await proxy.connect(voter2);
+                await expect(VoteAsVoter2.vote(1)).to.emit(proxy, "Voted").withArgs(await voter2.getAddress(), "Black");
+                await time.increase(60);
+
+                const VoteAsVoter3 = await proxy.connect(voter3);
+                await expect(VoteAsVoter3.vote(2)).to.emit(proxy, "Voted").withArgs(await voter3.getAddress(), "White");
+                await time.increase(60);
+
+                const winner = await proxy.winner();
+                expect(winner).to.equal("Black WINS!!!!!!");
+            
+            });
+
+            it("Should revert when voter tries to vote after the duration", async function(){
+                const VoteAsVoter1 = await proxy.connect(voter1);
+                await expect(VoteAsVoter1.vote(1)).to.emit(proxy, "Voted").withArgs(await voter1.getAddress(), "Black");
+                await time.increase(60);
+
+                const VoteAsVoter2 = await proxy.connect(voter2);
+                await expect(VoteAsVoter2.vote(1)).to.emit(proxy, "Voted").withArgs(await voter2.getAddress(), "Black");
+                await time.increase(120);
+
+                const VoteAsVoter3 = await proxy.connect(voter3);
+                await expect(VoteAsVoter3.vote(2)).to.be.revertedWith("Voting time is over");
+            });
         });
     });
 

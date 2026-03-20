@@ -48,17 +48,16 @@ contract VotingV1 is Initializable, OwnableUpgradeable, UUPSUpgradeable{
         require(msg.sender != owner(), "Owner cannot vote");
         Voter storage voter = voterLog[msg.sender];
         require(voter.hasVoted == false, "Already voted");
-        if (option == 1){
-            voter.hasVoted = true;
+        
+        voter.hasVoted = true;
+        if (option == 1) {
             voter.votedFor = option1;
             option1Votes++;
-
             emit Voted(msg.sender, option1);
-
         } else {
-            voter.hasVoted = true;
             voter.votedFor = option2;
-            option2Votes++;    
+            option2Votes++;
+            emit Voted(msg.sender, option2);
         } 
 
     }

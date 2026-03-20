@@ -51,7 +51,7 @@ describe("Test Upgraddeable Voting System Contract", function(){
         });
         it("Should change state of voter", async function(){
             const VoteAsVoter1 = await proxy.connect(voter1);
-            await VoteAsVoter1.vote(1);
+            await expect(VoteAsVoter1.vote(1)).to.emit(proxy, "Voted").withArgs(await voter1.getAddress(), "Black");
             const voter1Data = await VoteAsVoter1.voterLog(voter1.getAddress());
 
             expect(voter1Data.hasVoted).to.equal(true);
@@ -63,7 +63,7 @@ describe("Test Upgraddeable Voting System Contract", function(){
 
         it("Should revert when user tries voting twice", async function(){
             const VoteAsVoter1 = await proxy.connect(voter1);
-            await VoteAsVoter1.vote(1);
+            await expect(VoteAsVoter1.vote(1)).to.emit(proxy, "Voted");
             await expect(VoteAsVoter1.vote(2)).to.be.revertedWith("Already voted");
         });
 
@@ -76,13 +76,13 @@ describe("Test Upgraddeable Voting System Contract", function(){
     describe("Get winner", function(){
         it("Should get winning vote", async function(){
             const VoteAsVoter1 = await proxy.connect(voter1);
-            await VoteAsVoter1.vote(1);
+            await expect(VoteAsVoter1.vote(1)).to.emit(proxy, "Voted").withArgs(await voter1.getAddress(), "Black");
 
             const VoteAsVoter2 = await proxy.connect(voter2);
-            await VoteAsVoter2.vote(1);
+            await expect(VoteAsVoter2.vote(1)).to.emit(proxy, "Voted").withArgs(await voter2.getAddress(), "Black");
 
             const VoteAsVoter3 = await proxy.connect(voter3);
-            await VoteAsVoter3.vote(2);
+            await expect(VoteAsVoter3.vote(2)).to.emit(proxy, "Voted").withArgs(await voter3.getAddress(), "White");
 
             const winner = await proxy.winner();
             expect(winner).to.equal("Black WINS!!!!!!");
@@ -90,10 +90,10 @@ describe("Test Upgraddeable Voting System Contract", function(){
 
         it("Should get a draw", async function(){
             const VoteAsVoter1 = await proxy.connect(voter1);
-            await VoteAsVoter1.vote(1);
+            await expect(VoteAsVoter1.vote(1)).to.emit(proxy, "Voted").withArgs(await voter1.getAddress(), "Black");
 
             const VoteAsVoter2 = await proxy.connect(voter2);
-            await VoteAsVoter2.vote(2);
+            await expect(VoteAsVoter2.vote(2)).to.emit(proxy, "Voted").withArgs(await voter2.getAddress(), "White");
 
             const winner = await proxy.winner();
             expect(winner).to.equal("ITS A DRAW!!!!!");

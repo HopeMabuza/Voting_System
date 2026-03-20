@@ -20,16 +20,24 @@ describe("Test Upgraddeable Voting System Contract", function(){
     });
 
     describe("State after deployment", function(){
-        it("Should get correct options to vote for", async function(){
-            const _option1 = await proxy.option1();
-            const _option2 = await proxy.option2();
 
-            expect(_option1.toString()).to.equal("Black");
-            expect(_option2.toString()).to.equal("White");
+        it("Should get correct contract owner", async function(){
+            expect(await proxy.owner()).to.equal(owner);
+        });
+        it("Should get correct options to vote for", async function(){
+            const option1 = await proxy.option1();
+            const option2 = await proxy.option2();
+
+            expect(option1.toString()).to.equal("Black");
+            expect(option2.toString()).to.equal("White");
 
         });
 
         it("Should have votes number as 0", async function(){
+            const option1Votes = await proxy.option1Votes();
+            const option2Votes = await proxy.option2Votes();
+            expect(option1Votes).to.equal(0);
+            expect(option2Votes).to.equal(0);
 
         });
     });
@@ -92,12 +100,4 @@ describe("Test Upgraddeable Voting System Contract", function(){
         });
     });
 
-
-    //add test for booleans as false
-
-    //add tests for view options
-
-    //add tests for vote and edge cases, like trying to vote twice or woner trying to vote
-
-    //add tests for winner, test calling winner without entry
 })

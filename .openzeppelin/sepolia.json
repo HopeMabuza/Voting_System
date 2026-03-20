@@ -1,0 +1,179 @@
+{
+  "manifestVersion": "3.2",
+  "proxies": [
+    {
+      "address": "0xA021009D925ac59Aae749B5dC3c384eCF883b816",
+      "txHash": "0xe69255107cfa5752b4ac504a123e24e4c90c7d93b77a69f05d70187e7499a73c",
+      "kind": "uups"
+    }
+  ],
+  "impls": {
+    "3582aae77e4a6f62e2f8edc4e5ab14d6cf9977dedd566fa70d94c909eda85933": {
+      "address": "0xf6E0Cb61B2b37b8d789d51716f5f5B467583bda3",
+      "txHash": "0x955fc951a774d64cace9e06fc451079851bf307a6ad937adf648f70e68a2f6ce",
+      "layout": {
+        "solcVersion": "0.8.20",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:40"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:169"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:111"
+          },
+          {
+            "label": "option1Votes",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "VotingV1",
+            "src": "contracts/UpgradeableVoting.sol:16"
+          },
+          {
+            "label": "option2Votes",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_uint256",
+            "contract": "VotingV1",
+            "src": "contracts/UpgradeableVoting.sol:17"
+          },
+          {
+            "label": "voterLog",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_mapping(t_address,t_struct(Voter)1311_storage)",
+            "contract": "VotingV1",
+            "src": "contracts/UpgradeableVoting.sol:19"
+          },
+          {
+            "label": "option1",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_string_storage",
+            "contract": "VotingV1",
+            "src": "contracts/UpgradeableVoting.sol:21"
+          },
+          {
+            "label": "option2",
+            "offset": 0,
+            "slot": "205",
+            "type": "t_string_storage",
+            "contract": "VotingV1",
+            "src": "contracts/UpgradeableVoting.sol:22"
+          },
+          {
+            "label": "_gap",
+            "offset": 0,
+            "slot": "206",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "VotingV1",
+            "src": "contracts/UpgradeableVoting.sol:26"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_struct(Voter)1311_storage)": {
+            "label": "mapping(address => struct VotingV1.Voter)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Voter)1311_storage": {
+            "label": "struct VotingV1.Voter",
+            "members": [
+              {
+                "label": "hasVoted",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "votedFor",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    }
+  }
+}
